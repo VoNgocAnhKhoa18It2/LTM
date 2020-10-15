@@ -72,7 +72,7 @@ public class Client extends JFrame {
 	public Messenger connection (String name) throws Exception {
 		InetAddress address = InetAddress.getLocalHost();
 		System.out.println(address.getHostAddress());
-		Messenger messenger = new Messenger(name,"172.20.10.5");
+		Messenger messenger = new Messenger(name,"192.168.1.78");
 		OutputStream outputStream = socket.getOutputStream();
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 		objectOutputStream.writeObject(messenger);
