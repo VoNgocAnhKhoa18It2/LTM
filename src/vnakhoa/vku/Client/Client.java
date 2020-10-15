@@ -336,8 +336,10 @@ public class Client extends JFrame {
 							
 							line.getList().forEach((userCaling) -> {
 								try {
-									CallingClient callingClient = new CallingClient(userCaling.getAddress(), Integer.valueOf(userCaling.getPort()), userCaling.getName());
-									calling.pnlClient.add(callingClient);
+									if (!userCaling.getName().equals(name)) {
+										CallingClient callingClient = new CallingClient(userCaling.getAddress(), Integer.valueOf(userCaling.getPort()), userCaling.getName());
+										calling.pnlClient.add(callingClient);
+									}
 								} catch (Exception e) {
 									e.printStackTrace();
 								}

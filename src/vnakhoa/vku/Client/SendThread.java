@@ -68,7 +68,7 @@ public class SendThread extends Thread{
         
     }
 	
-	private byte [] IMG(Image image) throws Exception {
+	private byte[] IMG(Image image) throws Exception {
 		BufferedImage bi = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2 = bi.createGraphics();
 		g2.drawImage(image,0,0,null);
