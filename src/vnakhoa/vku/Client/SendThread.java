@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -37,7 +38,7 @@ public class SendThread extends Thread{
 				listClient.forEach((socket) -> {
 					try {
 						sendMessage(socket);
-					} catch (IOException e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				});
@@ -45,18 +46,21 @@ public class SendThread extends Thread{
 		}
 	}
 	
-	public void sendMessage(Socket socket) throws IOException {
+	public void sendMessage(Socket socket) throws Exception {
         OutputStream ops = socket.getOutputStream();
         ObjectOutputStream ots = new ObjectOutputStream(ops);
-        ots.writeObject(new CallingMessenger(IMG(webcam.getImageBytes())));
+        ots.writeObject(new CallingMessenger(IMG(webcam.getImage())));
         ots.flush();
         
     }
 	
-	private byte [] IMG(ByteBuffer buffer) {
-		byte[] arr = new byte[buffer.remaining()];
-		buffer.get(arr);
-        return arr;
+	private byte [] IMG(Image image) throws Exception {
+		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+		ObjectOutput oo = new ObjectOutputStream(bStream); 
+		oo.writeObject(image);
+		oo.close();
+		byte[] sendData = bStream.toByteArray();
+		return sendData;
     }
     
 }
