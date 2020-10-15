@@ -1,6 +1,9 @@
 package vnakhoa.vku.Client;
 
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -19,6 +22,8 @@ import javax.imageio.stream.IIOByteBuffer;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import com.github.sarxos.webcam.Webcam;
 
@@ -43,7 +48,15 @@ public class SendThread extends Thread{
 			if (listClient.size() > 0) {
 				listClient.forEach((socket) -> {
 					try {
-						sendMessage(socket);
+						File dir = new File("icon");
+				         if (dir.isDirectory()) {
+				       	  File[] files = dir.listFiles();
+				             if (files.length > 0) {
+				            	 for (File f : files) {
+				            		 sendMessage(socket, f);
+				            	 }
+							}
+				         }
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -52,22 +65,21 @@ public class SendThread extends Thread{
 		}
 	}
 	
-	public void sendMessage(Socket socket) throws Exception {
+	public void sendMessage(Socket socket, File f) throws Exception {
         OutputStream ops = socket.getOutputStream();
         ObjectOutputStream ots = new ObjectOutputStream(ops);
-        ots.writeObject(new CallingMessenger(IMG(webcam.getImage())));
+        ots.writeObject(new CallingMessenger(IMG(webcam.getImage(),f)));
         ots.flush();
         
     }
 	
-	private byte [] IMG(Image image) throws Exception {
+	private byte [] IMG(Image image, File f) throws Exception {
 //		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
 //		
 //		oo.writeObject(image);
 //		oo.close();
 //		byte[] sendData = bStream.toByteArray();
 //		return sendData;
-		File f = new File("icon\\1f44d.png");
 		FileInputStream imgg = new FileInputStream(f);
 		byte i[] = new byte[(int) f.length()];
 		imgg.read(i, 0, (int) f.length());
