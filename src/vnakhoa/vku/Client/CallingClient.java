@@ -43,7 +43,6 @@ public class CallingClient extends JLayeredPane {
 		lblImg = new JLabel("New label");
 		lblImg.setBounds(0, 0, 150, 150);
 		lblImg.setOpaque(true);
-		lblImg.setBackground(Color.RED);
 		lblImg.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblImg);
 		
@@ -60,7 +59,7 @@ public class CallingClient extends JLayeredPane {
 		receiveThread.start();
 	}
 	
-	public ImageIcon reIcon(Image path) {
+	public ImageIcon reIcon(byte[] path) {
 		ImageIcon img = new ImageIcon(path);
 		Image im = img.getImage().getScaledInstance(lblImg.getWidth(), lblImg.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon anh = new ImageIcon(im);

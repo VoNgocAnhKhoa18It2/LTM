@@ -77,6 +77,7 @@ public class Server {
 	            if (listCalling.size() > 0) {
 	            	sendMessage(new Messenger("Server", user.getName()+ " đã tạo 1 cuộc hội thoại",Event.CALLING_NOTIFICATION),client);
 				}
+	            System.out.println(user.getUserIP());
 	            start();
 			}
         }
