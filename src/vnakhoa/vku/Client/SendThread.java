@@ -1,6 +1,7 @@
 package vnakhoa.vku.Client;
 
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,6 +16,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Base64;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -26,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
 
 import vnakhoa.vku.Model.CallingMessenger;
 import vnakhoa.vku.Model.Messenger;
@@ -33,9 +36,9 @@ import vnakhoa.vku.Model.Messenger;
 public class SendThread extends Thread{
 	
 	public Vector<Socket> listClient;
-	public Webcam webcam;
+	public WebcamPanel webcam;
 
-	public SendThread(Vector<Socket> listClient, Webcam webcam) {
+	public SendThread(Vector<Socket> listClient, WebcamPanel webcam) {
 		super();
 		this.listClient = listClient;
 		this.webcam = webcam;
@@ -48,15 +51,7 @@ public class SendThread extends Thread{
 			if (listClient.size() > 0) {
 				listClient.forEach((socket) -> {
 					try {
-						File dir = new File("icon");
-				         if (dir.isDirectory()) {
-				       	  File[] files = dir.listFiles();
-				             if (files.length > 0) {
-				            	 for (File f : files) {
-				            		 sendMessage(socket, f);
-				            	 }
-							}
-				         }
+						sendMessage(socket);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -65,25 +60,22 @@ public class SendThread extends Thread{
 		}
 	}
 	
-	public void sendMessage(Socket socket, File f) throws Exception {
+	public void sendMessage(Socket socket) throws Exception {
         OutputStream ops = socket.getOutputStream();
         ObjectOutputStream ots = new ObjectOutputStream(ops);
-        ots.writeObject(new CallingMessenger(IMG(webcam.getImage(),f)));
+        ots.writeObject(new CallingMessenger(IMG(webcam.getImage())));
         ots.flush();
         
     }
 	
-	private byte [] IMG(Image image, File f) throws Exception {
-//		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-//		
-//		oo.writeObject(image);
-//		oo.close();
-//		byte[] sendData = bStream.toByteArray();
-//		return sendData;
-		FileInputStream imgg = new FileInputStream(f);
-		byte i[] = new byte[(int) f.length()];
-		imgg.read(i, 0, (int) f.length());
-		return i;
+	private byte [] IMG(Image image) throws Exception {
+		BufferedImage bi = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2 = bi.createGraphics();
+		g2.drawImage(image,0,0,null);
+		g2.dispose();
+		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+		ImageIO.write(bi, "jpg", bStream);
+		return bStream.toByteArray();
     }
     
 }

@@ -125,7 +125,7 @@ public class Calling extends JFrame {
 			try {
 				serverSocket = new ServerSocket(port);
 				start();
-				new SendThread(listClient,webCam);
+				new SendThread(listClient,webcamPanel);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
