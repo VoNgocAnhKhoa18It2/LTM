@@ -65,7 +65,6 @@ public class SendThread extends Thread{
         ObjectOutputStream ots = new ObjectOutputStream(ops);
         ots.writeObject(new CallingMessenger(IMG(webcam.getImage())));
         ots.flush();
-        
     }
 	
 	private byte[] IMG(Image image) throws Exception {

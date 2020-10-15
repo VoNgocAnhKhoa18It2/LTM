@@ -109,7 +109,11 @@ public class Server {
 							case Event.CALLING_ACCEPT:
 								UserCalling calling = new UserCalling(user.getName(),user.getUserIP(),String.valueOf(port));
 								sendMessage(new Messenger("Server",listCalling,Event.CALLING_ACCEPT),user.getSocket());
-								sendtoall(new Messenger(calling,Event.NEW_CALLING));
+								for (Manageuser c : clients) {
+						        	if(!c.user.getName().equals(user.getName())) {
+						        		sendtoall(new Messenger(calling,Event.NEW_CALLING));
+						        	}
+						        }
 								listCalling.add(calling);
 								break;
 							case Event.DICONNECT:

@@ -355,11 +355,8 @@ public class Client extends JFrame {
 							break;
 						case Event.NEW_CALLING:
 							UserCalling userCaling = line.getCalling();
-							if (!userCaling.getName().equals(name)) {
-								CallingClient callingClient = new CallingClient(userCaling.getAddress(), Integer.valueOf(userCaling.getPort()), userCaling.getName());
-								Calling.pnlClient.add(callingClient);
-							}
-							
+							CallingClient callingClient = new CallingClient(userCaling.getAddress(), Integer.valueOf(userCaling.getPort()), userCaling.getName());
+							Calling.pnlClient.add(callingClient);
 							break;
 						}
                 	} else {
