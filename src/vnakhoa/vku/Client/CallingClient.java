@@ -36,7 +36,6 @@ public class CallingClient extends JLayeredPane {
 	public CallingClient(String address, int port,String name) throws  Exception {
 		setAutoscrolls(true);
 		setMaximumSize(new Dimension(32767, 150));
-		setBorder(new EtchedBorder(EtchedBorder.RAISED, Color.CYAN, Color.GREEN));
 		setPreferredSize(new Dimension(150, 150));
 		setLayout(null);
 		
@@ -46,7 +45,7 @@ public class CallingClient extends JLayeredPane {
 		lblImg.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblImg);
 		
-		JLabel lblName = new JLabel("khoa");
+		JLabel lblName = new JLabel("");
 		setLayer(lblName, 300);
 		lblName.setBounds(0, 114, 150, 36);
 		lblName.setBorder(new EmptyBorder(5, 5, 5, 0));
@@ -75,7 +74,7 @@ public class CallingClient extends JLayeredPane {
 					InputStream inputStream = socket.getInputStream();
 					ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 					CallingMessenger calling  = (CallingMessenger) objectInputStream.readObject();
-					lblImg.setIcon(new ImageIcon(calling.getImg()));
+					lblImg.setIcon(reIcon(calling.getImg()));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

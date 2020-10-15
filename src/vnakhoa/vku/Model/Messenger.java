@@ -14,8 +14,9 @@ public class Messenger implements Serializable {
 	private UserCalling calling;
 
 	// New Calling
-	public Messenger(UserCalling calling, String event) {
+	public Messenger(String name, UserCalling calling, String event) {
 		super();
+		this.name = name;
 		this.event = event;
 		this.calling = calling;
 	}

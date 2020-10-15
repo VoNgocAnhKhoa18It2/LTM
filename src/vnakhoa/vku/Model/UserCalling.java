@@ -2,7 +2,7 @@ package vnakhoa.vku.Model;
 
 import java.io.Serializable;
 
-public class UserCalling implements Serializable{
+public class UserCalling implements Serializable {
 	private String name;
 	private String address;
 	private String port;
@@ -32,5 +32,9 @@ public class UserCalling implements Serializable{
 	public void setPort(String port) {
 		this.port = port;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "UserCalling [name=" + name + ", address=" + address + ", port=" + port + "]";
+	}
 }
