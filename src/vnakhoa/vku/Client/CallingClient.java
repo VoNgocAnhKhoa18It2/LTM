@@ -54,8 +54,13 @@ public class CallingClient extends JLayeredPane {
 		add(lblName);
 		
 		socket = new Socket(address,port);
-		ReceiveThread receiveThread = new ReceiveThread();
-		receiveThread.start();
+		if (socket.isConnected()) {
+			ReceiveThread receiveThread = new ReceiveThread();
+			receiveThread.start();
+			System.out.println("Ket noi thanh cong");
+		} else {
+			System.out.println("Ket noi that bai");
+		}
 	}
 	
 	public ImageIcon reIcon(byte[] path) {
@@ -69,11 +74,12 @@ public class CallingClient extends JLayeredPane {
 
 		@Override
 		public void run() {
+			CallingMessenger calling = null;
 			try {
 				while (true) {
 					InputStream inputStream = socket.getInputStream();
 					ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-					CallingMessenger calling  = (CallingMessenger) objectInputStream.readObject();
+					calling = (CallingMessenger) objectInputStream.readObject();
 					lblImg.setIcon(reIcon(calling.getImg()));
 				}
 			} catch (Exception e) {

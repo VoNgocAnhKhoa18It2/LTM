@@ -136,10 +136,9 @@ public class Calling extends JFrame {
 		@Override
 		public void run() {
 			try {	
-				Socket socket;
 				while(true) {
-					socket = serverSocket.accept(); 
-					listClient.add(socket);
+					Socket client = serverSocket.accept(); 
+					listClient.add(client);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -327,7 +327,7 @@ public class Client extends JFrame {
 							}
 							break;
 						case Event.CALLING_ACCEPT:
-							Calling calling = new Calling(socket,Client.port);
+							Calling calling = new Calling(socket,port);
 							calling.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 							calling.setVisible(true);
 							calling.setLocationRelativeTo(null);
