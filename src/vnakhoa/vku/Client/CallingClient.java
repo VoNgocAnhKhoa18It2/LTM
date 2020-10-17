@@ -58,7 +58,6 @@ public class CallingClient extends JLayeredPane {
 		
 		socket = new Socket(calling.getAddress(),Integer.parseInt(calling.getPort()));
 		if (socket.isConnected()) {
-			Thread.sleep(100);
 			new ReceiveThread().start();
 			System.out.println("Ket noi thanh cong");
 		} else {
@@ -66,7 +65,7 @@ public class CallingClient extends JLayeredPane {
 		}
 	}
 	
-	public ImageIcon reIcon(byte[] path) {
+	public ImageIcon reIcon(Image path) {
 		ImageIcon img = new ImageIcon(path);
 		Image im = img.getImage().getScaledInstance(lblImg.getWidth(), lblImg.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon anh = new ImageIcon(im);
