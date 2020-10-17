@@ -337,7 +337,7 @@ public class Client extends JFrame {
 							line.getList().forEach((userCaling) -> {
 								try {
 									if (!userCaling.getName().equals(name)) {
-										CallingClient callingClient = new CallingClient(userCaling.getAddress(), Integer.valueOf(userCaling.getPort()), userCaling.getName());
+										CallingClient callingClient = new CallingClient(userCaling);
 										calling.pnlClient.add(callingClient);
 									}
 								} catch (Exception e) {
@@ -356,7 +356,7 @@ public class Client extends JFrame {
 						case Event.NEW_CALLING:
 							UserCalling userCaling = line.getCalling();
 							System.out.println(userCaling.toString());
-							CallingClient callingClient = new CallingClient(userCaling.getAddress(), Integer.valueOf(userCaling.getPort()), userCaling.getName());
+							CallingClient callingClient = new CallingClient(userCaling);
 							Calling.pnlClient.add(callingClient);
 							break;
 						}

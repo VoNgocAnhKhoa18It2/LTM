@@ -5,16 +5,21 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,10 +32,12 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 
+import vnakhoa.vku.Model.CallingMessenger;
 import vnakhoa.vku.Model.Messenger;
 import vnakhoa.vku.Server.Event;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Dimension;
 import javax.swing.JLayeredPane;
 import java.awt.FlowLayout;
@@ -47,7 +54,7 @@ public class Calling extends JFrame {
 	private JPanel pnlChatVideo;
 	private JLabel lblNewLabel;
 	WebcamPanel webcamPanel;
-	Socket socket;
+	Socket client;
 	
 	
 	/**
@@ -59,7 +66,7 @@ public class Calling extends JFrame {
 	 * Create the frame.
 	 */
 	public Calling(Socket socket,int port) {
-		this.socket = socket;
+		this.client = socket;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 833, 550);
 		contentPane = new JPanel();
@@ -125,8 +132,6 @@ public class Calling extends JFrame {
 			try {
 				serverSocket = new ServerSocket(port);
 				start();
-				new SendThread(listClient,webcamPanel);
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -138,11 +143,59 @@ public class Calling extends JFrame {
 			try {	
 				while(true) {
 					Socket client = serverSocket.accept(); 
-					listClient.add(client);
+					System.out.println("Co nguoi ket noi");
+					SendClient sendClient = new SendClient(client);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	class SendClient extends Thread{
+		Socket socket;
+		
+		public SendClient(Socket socket) {
+			super();
+			this.socket = socket;
+			start();
+		}
+
+		@Override
+		public void run() {
+			boolean loop = true;
+			while (loop) {
+				try {
+					sendMessage(socket);
+				} catch (Exception e) {
+					if (socket == null) {
+						loop = false;
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		
+		public void sendMessage(Socket socket) throws Exception {
+	        OutputStream ops = socket.getOutputStream();
+	        ObjectOutputStream ots = new ObjectOutputStream(ops);
+	        ots.writeObject(new CallingMessenger(IMG(webcamPanel.getImage())));
+	        ots.flush();
+	    }
+		
+		private byte[] IMG(Image image) {
+			try {
+				BufferedImage bi = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+				Graphics2D g2 = bi.createGraphics();
+				g2.drawImage(image,0,0,null);
+				g2.dispose();
+				ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+				ImageIO.write(bi, "jpg", bStream);
+				return bStream.toByteArray();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+	    }
 	}
 }

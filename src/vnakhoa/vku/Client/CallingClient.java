@@ -24,16 +24,19 @@ import java.awt.Color;
 import javax.swing.border.EtchedBorder;
 
 import vnakhoa.vku.Model.CallingMessenger;
+import vnakhoa.vku.Model.UserCalling;
 
 public class CallingClient extends JLayeredPane {
 	
 	JLabel lblImg;
 	Socket socket;
+	UserCalling calling;
 	/**
 	 * Create the panel.
 	 * @throws Exception 
 	 */
-	public CallingClient(String address, int port,String name) throws  Exception {
+	public CallingClient(UserCalling calling) throws  Exception {
+		this.calling = calling;
 		setAutoscrolls(true);
 		setMaximumSize(new Dimension(32767, 150));
 		setPreferredSize(new Dimension(150, 150));
@@ -50,13 +53,13 @@ public class CallingClient extends JLayeredPane {
 		lblName.setBounds(0, 114, 150, 36);
 		lblName.setBorder(new EmptyBorder(5, 5, 5, 0));
 		lblName.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblName.setText(name);
+		lblName.setText(calling.getName());
 		add(lblName);
 		
-		socket = new Socket(address,port);
+		socket = new Socket(calling.getAddress(),Integer.parseInt(calling.getPort()));
 		if (socket.isConnected()) {
-			ReceiveThread receiveThread = new ReceiveThread();
-			receiveThread.start();
+			Thread.sleep(100);
+			new ReceiveThread().start();
 			System.out.println("Ket noi thanh cong");
 		} else {
 			System.out.println("Ket noi that bai");
