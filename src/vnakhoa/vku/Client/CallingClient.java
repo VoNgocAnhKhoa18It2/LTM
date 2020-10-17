@@ -59,15 +59,14 @@ public class CallingClient extends JLayeredPane {
 		socket = new Socket(calling.getAddress(),Integer.parseInt(calling.getPort()));
 		if (socket.isConnected()) {
 			new ReceiveThread().start();
-			System.out.println("Ket noi thanh cong");
+			
 		} else {
 			System.out.println("Ket noi that bai");
 		}
 	}
 	
-	public ImageIcon reIcon(Image path) {
-		ImageIcon img = new ImageIcon(path);
-		Image im = img.getImage().getScaledInstance(lblImg.getWidth(), lblImg.getHeight(), Image.SCALE_SMOOTH);
+	public ImageIcon reIcon(ImageIcon path) {
+		Image im = path.getImage().getScaledInstance(lblImg.getWidth(), lblImg.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon anh = new ImageIcon(im);
 		return anh;
 	}
@@ -77,6 +76,7 @@ public class CallingClient extends JLayeredPane {
 		@Override
 		public void run() {
 			CallingMessenger calling = null;
+			System.out.println("Ket noi thanh cong");
 			try {
 				while (true) {
 					InputStream inputStream = socket.getInputStream();

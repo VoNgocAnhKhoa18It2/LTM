@@ -21,6 +21,7 @@ import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -123,7 +124,12 @@ public class Calling extends JFrame {
 		pnlClient.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		scrollPane.setViewportView(pnlClient);
 		pnlClient.setLayout(new GridLayout(0, 2, 5, 5));
-		new ServerThread(port);
+		while (true) {
+			if (webcamPanel.isStarting()) {
+				new ServerThread(port);
+				break;
+			}
+		}
 	}
 	
 	class ServerThread extends Thread {
@@ -180,23 +186,10 @@ public class Calling extends JFrame {
 		public void sendMessage(Socket socket) throws Exception {
 	        OutputStream ops = socket.getOutputStream();
 	        ObjectOutputStream ots = new ObjectOutputStream(ops);
-	        ots.writeObject(new CallingMessenger(webcamPanel.getImage()));
+	        ots.writeObject(new CallingMessenger(new ImageIcon(webcamPanel.getImage())));
 	        ots.flush();
 	    }
 		
-		private byte[] IMG(Image image) {
-			try {
-				BufferedImage bi = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
-				Graphics2D g2 = bi.createGraphics();
-				g2.drawImage(image,0,0,null);
-				g2.dispose();
-				ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-				ImageIO.write(bi, "jpg", bStream);
-				return bStream.toByteArray();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-	    }
+		
 	}
 }

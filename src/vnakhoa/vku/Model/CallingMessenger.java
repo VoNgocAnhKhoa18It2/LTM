@@ -1,21 +1,23 @@
 package vnakhoa.vku.Model;
 
-import java.awt.Image;
+
 import java.io.Serializable;
 
-public class CallingMessenger{
-	private Image img;
+import javax.swing.ImageIcon;
 
-	public CallingMessenger(Image img) {
+public class CallingMessenger implements Serializable {
+	private ImageIcon img;
+
+	public CallingMessenger(ImageIcon img) {
 		super();
 		this.img = img;
 	}
 
-	public Image getImg() {
+	public ImageIcon getImg() {
 		return img;
 	}
 
-	public void setImg(Image img) {
+	public void setImg(ImageIcon img) {
 		this.img = img;
 	}
 	
