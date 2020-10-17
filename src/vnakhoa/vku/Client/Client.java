@@ -72,7 +72,7 @@ public class Client extends JFrame {
 	public Messenger connection (String name) throws Exception {
 		InetAddress address = InetAddress.getLocalHost();
 		System.out.println(address.getHostAddress());
-		Messenger messenger = new Messenger(name,"192.168.1.7");
+		Messenger messenger = new Messenger(name,"192.168.1.4");
 		OutputStream outputStream = socket.getOutputStream();
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 		objectOutputStream.writeObject(messenger);
@@ -91,7 +91,7 @@ public class Client extends JFrame {
 					System.exit(0);
 				} else if(!name.equals("")) {
 					name = upPerCase(name);
-					socket = new Socket("192.168.1.7",1201);
+					socket = new Socket("192.168.1.4",1201);
 					Messenger result = connection(name);
 					if (result.getName().equals(Event.NOTIFICATION_OK)) {
 						User user = new User(name, "", socket);

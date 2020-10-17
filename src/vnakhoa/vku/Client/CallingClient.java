@@ -66,7 +66,7 @@ public class CallingClient extends JLayeredPane {
 		}
 	}
 	
-	public ImageIcon reIcon(byte[] path) {
+	public ImageIcon reIcon(Image path) {
 		ImageIcon img = new ImageIcon(path);
 		Image im = img.getImage().getScaledInstance(lblImg.getWidth(), lblImg.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon anh = new ImageIcon(im);

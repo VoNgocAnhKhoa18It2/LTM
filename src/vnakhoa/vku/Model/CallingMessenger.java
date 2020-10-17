@@ -4,18 +4,18 @@ import java.awt.Image;
 import java.io.Serializable;
 
 public class CallingMessenger implements Serializable {
-	private byte[] img;
+	private Image img;
 
-	public CallingMessenger(byte[] img) {
+	public CallingMessenger(Image img) {
 		super();
 		this.img = img;
 	}
 
-	public byte[] getImg() {
+	public Image getImg() {
 		return img;
 	}
 
-	public void setImg(byte[] img) {
+	public void setImg(Image img) {
 		this.img = img;
 	}
 	

@@ -179,7 +179,7 @@ public class Calling extends JFrame {
 		public void sendMessage(Socket socket) throws Exception {
 	        OutputStream ops = socket.getOutputStream();
 	        ObjectOutputStream ots = new ObjectOutputStream(ops);
-	        ots.writeObject(new CallingMessenger(IMG(webcamPanel.getImage())));
+	        ots.writeObject(new CallingMessenger(webcamPanel.getImage()));
 	        ots.flush();
 	    }
 		
