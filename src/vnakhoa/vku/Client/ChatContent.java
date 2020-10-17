@@ -316,11 +316,11 @@ public class ChatContent extends JPanel {
 		add(panel_1);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 		
-		JLabel lblNewLabel = new JLabel("A da tao 1 cuoc hoi thoai");
+		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setText(name+ " da tao 1 cuoc hoi thoai");
+		lblNewLabel.setText(name);
 		panel_1.add(lblNewLabel);
 		
 		JPanel panel = new JPanel();

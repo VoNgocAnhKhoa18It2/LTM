@@ -179,16 +179,13 @@ public class Calling extends JFrame {
 		public void sendMessage(Socket socket) throws Exception {
 	        OutputStream ops = socket.getOutputStream();
 	        ObjectOutputStream ots = new ObjectOutputStream(ops);
-	        ots.writeObject(new CallingMessenger(IMG(webcamPanel.getImage())));
+	        ots.writeObject(new CallingMessenger(IMG()));
 	        ots.flush();
 	    }
 		
-		private byte[] IMG(Image image) {
+		private byte[] IMG() {
 			try {
-				BufferedImage bi = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
-				Graphics2D g2 = bi.createGraphics();
-				g2.drawImage(image,0,0,null);
-				g2.dispose();
+				BufferedImage bi = webcamPanel.getImage();
 				ByteArrayOutputStream bStream = new ByteArrayOutputStream();
 				ImageIO.write(bi, "jpg", bStream);
 				return bStream.toByteArray();
