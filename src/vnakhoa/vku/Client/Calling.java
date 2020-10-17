@@ -172,7 +172,11 @@ public class Calling extends JFrame {
 			boolean loop = true;
 			while (loop) {
 				try {
-					sendMessage(socket);
+					BufferedImage bf = webcamPanel.getImage();
+					OutputStream ops = socket.getOutputStream();
+			        ObjectOutputStream ots = new ObjectOutputStream(ops);
+			        ots.writeObject(new ImageIcon(bf));
+			        ots.flush();
 				} catch (Exception e) {
 					if (socket == null) {
 						loop = false;
@@ -182,14 +186,5 @@ public class Calling extends JFrame {
 				}
 			}
 		}
-		
-		public void sendMessage(Socket socket) throws Exception {
-	        OutputStream ops = socket.getOutputStream();
-	        ObjectOutputStream ots = new ObjectOutputStream(ops);
-	        ots.writeObject(new CallingMessenger(new ImageIcon(webcamPanel.getImage())));
-	        ots.flush();
-	    }
-		
-		
 	}
 }
