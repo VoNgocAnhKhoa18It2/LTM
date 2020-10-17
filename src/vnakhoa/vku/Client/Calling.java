@@ -144,7 +144,7 @@ public class Calling extends JFrame {
 				while(true) {
 					Socket client = serverSocket.accept(); 
 					System.out.println("Co nguoi ket noi");
-					SendClient sendClient = new SendClient(client);
+					new SendClient(client);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -164,9 +164,13 @@ public class Calling extends JFrame {
 		@Override
 		public void run() {
 			boolean loop = true;
+			BufferedImage bi;
 			while (loop) {
 				try {
-					sendMessage(socket);
+					bi = webcamPanel.getImage();
+					ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+					ImageIO.write(bi, "jpg", bStream);
+					sendMessage(socket,bStream.toByteArray());
 				} catch (Exception e) {
 					if (socket == null) {
 						loop = false;
@@ -176,23 +180,11 @@ public class Calling extends JFrame {
 			}
 		}
 		
-		public void sendMessage(Socket socket) throws Exception {
+		public void sendMessage(Socket socket,byte[] img) throws Exception {
 	        OutputStream ops = socket.getOutputStream();
 	        ObjectOutputStream ots = new ObjectOutputStream(ops);
-	        ots.writeObject(new CallingMessenger(IMG()));
+	        ots.writeObject(new CallingMessenger(img));
 	        ots.flush();
-	    }
-		
-		private byte[] IMG() {
-			try {
-				BufferedImage bi = webcamPanel.getImage();
-				ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-				ImageIO.write(bi, "jpg", bStream);
-				return bStream.toByteArray();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
 	    }
 	}
 }
