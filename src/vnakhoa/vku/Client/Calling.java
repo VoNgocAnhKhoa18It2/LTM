@@ -21,7 +21,6 @@ import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -56,7 +55,7 @@ public class Calling extends JFrame {
 	private JLabel lblNewLabel;
 	WebcamPanel webcamPanel;
 	Socket client;
-	BufferedImage bf;
+	
 	
 	/**
 	 * Launch the application.
@@ -124,20 +123,13 @@ public class Calling extends JFrame {
 		pnlClient.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		scrollPane.setViewportView(pnlClient);
 		pnlClient.setLayout(new GridLayout(0, 2, 5, 5));
-		
-		while (true) {
-			if (webcamPanel.isStarting()) {
-				new ServerThread(port);
-				break;
-			}
-		}
+		new ServerThread(port);
 	}
 	
 	class ServerThread extends Thread {
 		ServerSocket serverSocket;
 		public ServerThread(int port) {
 			try {
-				bf = webcamPanel.getImage();
 				serverSocket = new ServerSocket(port);
 				start();
 			} catch (Exception e) {
@@ -174,19 +166,36 @@ public class Calling extends JFrame {
 			boolean loop = true;
 			while (loop) {
 				try {
-					bf = webcamPanel.getImage();
-					OutputStream ops = socket.getOutputStream();
-			        ObjectOutputStream ots = new ObjectOutputStream(ops);
-			        ots.writeObject(new ImageIcon(bf));
-			        ots.flush();
+					sendMessage(socket);
 				} catch (Exception e) {
 					if (socket == null) {
 						loop = false;
+						e.printStackTrace();
 					}
-					loop = false;
-					e.printStackTrace();
 				}
 			}
 		}
+		
+		public void sendMessage(Socket socket) throws Exception {
+	        OutputStream ops = socket.getOutputStream();
+	        ObjectOutputStream ots = new ObjectOutputStream(ops);
+	        ots.writeObject(new CallingMessenger(IMG(webcamPanel.getImage())));
+	        ots.flush();
+	    }
+		
+		private byte[] IMG(Image image) {
+			try {
+				BufferedImage bi = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+				Graphics2D g2 = bi.createGraphics();
+				g2.drawImage(image,0,0,null);
+				g2.dispose();
+				ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+				ImageIO.write(bi, "jpg", bStream);
+				return bStream.toByteArray();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+	    }
 	}
 }
