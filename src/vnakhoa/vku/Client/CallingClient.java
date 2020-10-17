@@ -81,7 +81,7 @@ public class CallingClient extends JLayeredPane {
 				while (true) {
 					InputStream inputStream = socket.getInputStream();
 					ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-					lblImg.setIcon(reIcon((ImageIcon) objectInputStream.readObject()));
+					lblImg.setIcon((ImageIcon) objectInputStream.readObject());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

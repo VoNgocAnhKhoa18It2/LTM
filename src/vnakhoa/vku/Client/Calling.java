@@ -56,7 +56,7 @@ public class Calling extends JFrame {
 	private JLabel lblNewLabel;
 	WebcamPanel webcamPanel;
 	Socket client;
-	
+	BufferedImage bf;
 	
 	/**
 	 * Launch the application.
@@ -124,6 +124,7 @@ public class Calling extends JFrame {
 		pnlClient.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		scrollPane.setViewportView(pnlClient);
 		pnlClient.setLayout(new GridLayout(0, 2, 5, 5));
+		
 		while (true) {
 			if (webcamPanel.isStarting()) {
 				new ServerThread(port);
@@ -136,6 +137,7 @@ public class Calling extends JFrame {
 		ServerSocket serverSocket;
 		public ServerThread(int port) {
 			try {
+				bf = webcamPanel.getImage();
 				serverSocket = new ServerSocket(port);
 				start();
 			} catch (Exception e) {
@@ -172,7 +174,7 @@ public class Calling extends JFrame {
 			boolean loop = true;
 			while (loop) {
 				try {
-					BufferedImage bf = webcamPanel.getImage();
+					bf = webcamPanel.getImage();
 					OutputStream ops = socket.getOutputStream();
 			        ObjectOutputStream ots = new ObjectOutputStream(ops);
 			        ots.writeObject(new ImageIcon(bf));
