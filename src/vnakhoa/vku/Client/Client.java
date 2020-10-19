@@ -30,6 +30,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 import vnakhoa.vku.Model.Messenger;
 import vnakhoa.vku.Model.User;
@@ -50,6 +51,7 @@ public class Client extends JFrame {
 	static JLabel lblVP;
 	JDialog dialog;
 	public static int port;
+	public static boolean calling = false;
 
 	/**
 	 * Launch the application.
@@ -72,7 +74,7 @@ public class Client extends JFrame {
 	public Messenger connection (String name) throws Exception {
 		InetAddress address = InetAddress.getLocalHost();
 		System.out.println(address.getHostAddress());
-		Messenger messenger = new Messenger(name,"192.168.1.4");
+		Messenger messenger = new Messenger(name,"172.20.10.5");
 		OutputStream outputStream = socket.getOutputStream();
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 		objectOutputStream.writeObject(messenger);
@@ -91,7 +93,7 @@ public class Client extends JFrame {
 					System.exit(0);
 				} else if(!name.equals("")) {
 					name = upPerCase(name);
-					socket = new Socket("192.168.1.4",1201);
+					socket = new Socket("172.20.10.5",1201);
 					Messenger result = connection(name);
 					if (result.getName().equals(Event.NOTIFICATION_OK)) {
 						User user = new User(name, "", socket);
@@ -354,10 +356,12 @@ public class Client extends JFrame {
 							Chat.mess.scrollRectToVisible(rect);
 							break;
 						case Event.NEW_CALLING:
-							UserCalling userCaling = line.getCalling();
-							System.out.println(userCaling.toString());
-							CallingClient callingClient = new CallingClient(userCaling);
-							Calling.pnlClient.add(callingClient);
+							if (Client.calling) {
+								UserCalling userCaling = line.getCalling();
+								System.out.println(userCaling.toString());
+								CallingClient callingClient = new CallingClient(userCaling);
+								Calling.pnlClient.add(callingClient);
+							}
 							break;
 						}
                 	} else {

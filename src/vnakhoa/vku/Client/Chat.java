@@ -307,6 +307,7 @@ public class Chat extends JPanel {
 					objectOutputStream.writeObject(new Messenger(user.getName(),"",Event.CREATE_CALLING));
 					objectOutputStream.flush();
 					Client.check = true;
+					Client.calling = true;
 					ChatContent chatContent = new ChatContent("Bạn",socket);
 					mess.add(chatContent);
 					mess.revalidate();

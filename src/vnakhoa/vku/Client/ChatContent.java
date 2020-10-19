@@ -340,6 +340,7 @@ public class ChatContent extends JPanel {
 					objectOutputStream.writeObject(new Messenger("","",Event.CALLING_ACCEPT));
 					objectOutputStream.flush();
 					Client.check = true;
+					Client.calling = true;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
