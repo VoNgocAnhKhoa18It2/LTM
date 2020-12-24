@@ -1,70 +1,55 @@
 package vnakhoa.vku.Client;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.text.BoxView;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import vnakhoa.vku.Model.Messenger;
-import vnakhoa.vku.Model.User;
-import vnakhoa.vku.Server.Event;
-
-import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FileDialog;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-
-import javax.swing.ScrollPaneConstants;
-import javax.swing.ImageIcon;
-import java.awt.SystemColor;
-import javax.swing.JLayeredPane;
-import java.awt.FlowLayout;
-import javax.swing.SwingConstants;
-import java.awt.GridLayout;
-import javax.swing.border.LineBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import vnakhoa.vku.Graphic.TextFieldRounded;
+import vnakhoa.vku.Model.Messenger;
+import vnakhoa.vku.Model.User;
+import vnakhoa.vku.Server.Event;
 
 public class Chat extends JPanel {
 	
-	private JTextField txtContent;
+	private TextFieldRounded txtContent;
 	public static JPanel mess;
 	Socket socket;
 	ArrayList<String> limited;
@@ -168,7 +153,7 @@ public class Chat extends JPanel {
 		btnSend.setBounds(395, 398, 30, 27);
 		panel.add(btnSend, JLayeredPane.DEFAULT_LAYER);
 		
-		txtContent = new JTextField();
+		txtContent = new TextFieldRounded();
 		txtContent.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent evt) {
@@ -195,7 +180,6 @@ public class Chat extends JPanel {
 	            }
 			}
 		});
-		txtContent.setBorder(null);
 		txtContent.setBackground(Color.WHITE);
 		txtContent.setBounds(0, 398, 392, 27);
 		panel.add(txtContent,JLayeredPane.DEFAULT_LAYER);

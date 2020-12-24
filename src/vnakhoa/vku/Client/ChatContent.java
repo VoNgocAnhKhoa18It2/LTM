@@ -12,6 +12,8 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import vnakhoa.vku.Graphic.CLabel;
+import vnakhoa.vku.Graphic.LabelRounded;
 import vnakhoa.vku.Model.Messenger;
 import vnakhoa.vku.Server.Event;
 
@@ -48,7 +50,7 @@ import javax.swing.border.EmptyBorder;
 public class ChatContent extends JPanel {
 	
 	FlowLayout flowLayout;
-	JLabel lblName;
+	CLabel lblName;
 	JLabel lblContent;
 
 	//Messenge
@@ -57,7 +59,7 @@ public class ChatContent extends JPanel {
 		setBackground(Color.WHITE);
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
-		lblContent = new JLabel("Xin Chao");
+		LabelRounded lblContent = new LabelRounded();
 		
 		if (name.equals("") || name.equals("Server")) {
 			if (name.equals("Server")) { //Server
@@ -69,12 +71,12 @@ public class ChatContent extends JPanel {
 				lblContent.setBorder(new EmptyBorder(5, 0, 5, 0));
 			} else { // Client local
 				flowLayout = new FlowLayout(FlowLayout.RIGHT, 0, 0);
+				lblContent.setLineColor(new Color(0, 153, 255));
 				lblContent.setBackground(new Color(0, 153, 255));
 				lblContent.setForeground(new Color(255, 255, 255));
 				lblContent.setFont(new Font("Tahoma", Font.BOLD, 14));
 				setMaximumSize(new Dimension(32767, 40));
 				setBorder(new EmptyBorder(5, 0, 5, 10));
-				lblContent.setBorder(new EmptyBorder(10, 10, 10, 10));
 			}
 			add(lblContent);
 			
@@ -83,7 +85,7 @@ public class ChatContent extends JPanel {
 			flowLayout = new FlowLayout(FlowLayout.LEFT, 0, 0);
 			setBorder(new EmptyBorder(5, 10, 5, 0));
 			setMaximumSize(new Dimension(32767, 70));
-			lblContent.setBackground(Color.WHITE);
+			lblContent.setBackground(new Color(242, 239, 242));
 			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 			lblContent.setFont(new Font("Tahoma", Font.BOLD, 14));
 			
@@ -96,7 +98,8 @@ public class ChatContent extends JPanel {
 			txtName.setText(name);
 			panel.add(txtName);
 			
-			lblName = new JLabel("K");
+			lblName = new CLabel();
+			lblName.setLineColor(Color.RED);
 			lblName.setOpaque(true);
 			lblName.setBackground(new Color(255, 0, 0));
 			lblName.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -116,10 +119,10 @@ public class ChatContent extends JPanel {
 			panel.setBorder(new EmptyBorder(1, 1, 1, 1));
 			panel.setBackground(Color.WHITE);
 			add(panel);
+			lblContent.setLineColor(lblContent.getBackground());
 			panel.add(lblContent);
 		}
 		setLayout(flowLayout);
-		lblContent.setOpaque(true);
 		lblContent.setText(content);
 		
 	}
@@ -131,7 +134,7 @@ public class ChatContent extends JPanel {
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
 		lblContent = new JLabel();
-		lblName = new JLabel("K");
+		lblName = new CLabel();
 		
 		if (name.equals("")) {
 			flowLayout = new FlowLayout(FlowLayout.RIGHT, 0, 0);
@@ -145,7 +148,7 @@ public class ChatContent extends JPanel {
 		lblName.setOpaque(true);
 		lblName.setPreferredSize(new Dimension(40, 40));
 		lblName.setMaximumSize(new Dimension(40, 40));
-		lblName.setBorder(new EmptyBorder(9, 13, 9, 13));
+		lblName.setLineColor(Color.RED);
 		lblName.setBackground(new Color(255, 0, 51));
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -169,16 +172,16 @@ public class ChatContent extends JPanel {
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
 		lblContent = new JLabel("Xin Chao");
-		lblName = new JLabel("K");
+		CLabel lblName = new CLabel();
 		
 		flowLayout = new FlowLayout(FlowLayout.LEFT, 0, 0);
 		setBorder(new EmptyBorder(5, 10, 5, 0));
 		lblContent.setBackground(new Color(245, 245, 245));
 		setLayout(flowLayout);
+		lblName.setLineColor(Color.RED);
 		lblName.setOpaque(true);
 		lblName.setPreferredSize(new Dimension(40, 40));
 		lblName.setMaximumSize(new Dimension(40, 40));
-		lblName.setBorder(new EmptyBorder(9, 12, 9, 12));
 		lblName.setBackground(new Color(255, 0, 51));
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -206,8 +209,8 @@ public class ChatContent extends JPanel {
 		setMaximumSize(new Dimension(32767, 51));
 		
 		
-		lblName = new JLabel("K");
-		lblContent = new JLabel();
+		lblName = new CLabel();
+		LabelRounded lblContent = new LabelRounded();
 		
 		if (name.equals("")) {
 			flowLayout = new FlowLayout(FlowLayout.RIGHT, 0, 0);
@@ -218,10 +221,11 @@ public class ChatContent extends JPanel {
 		} else {	
 			flowLayout = new FlowLayout(FlowLayout.LEFT, 0, 0);
 			setBorder(new EmptyBorder(5, 10, 5, 0));
+			lblContent.setBackground(new Color(242, 239, 242));
 			
 			lblName.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 			lblName.setAlignmentX(Component.CENTER_ALIGNMENT);
-			lblName.setBorder(new EmptyBorder(0, 0, 0, 0));
+			lblName.setLineColor(Color.RED);
 			lblName.setOpaque(true);
 			lblName.setBackground(new Color(255, 0, 0));
 			lblName.setPreferredSize(new Dimension(40, 40));
@@ -243,7 +247,7 @@ public class ChatContent extends JPanel {
 			add(panel);
 			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 			
-			JLabel txtName = new JLabel("Khoa");
+			JLabel txtName = new JLabel();
 			txtName.setOpaque(true);
 			txtName.setBackground(Color.WHITE);
 			txtName.setHorizontalAlignment(SwingConstants.LEFT);
@@ -292,12 +296,10 @@ public class ChatContent extends JPanel {
 				}
 			}
 		});
-		lblContent.setBackground(Color.WHITE);
 		lblContent.setIcon(new ImageIcon("img\\icons8-download-18.png"));
 		lblContent.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblContent.setOpaque(true);
+		lblContent.setLineColor(lblContent.getBackground());
 		lblContent.setText("<HTML><p>"+fileName+"</p></HTML>");
-		lblContent.setBorder(new EmptyBorder(5, 5, 5, 5));
 		lblContent.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 	}
